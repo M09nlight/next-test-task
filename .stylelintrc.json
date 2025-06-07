@@ -1,7 +1,6 @@
 {
-  "extends": ["stylelint-config-standard", "stylelint-config-tailwindcss"],
+  "extends": ["stylelint-config-recommended", "stylelint-config-tailwindcss"],
   "rules": {
-    "color-hex-length": "long",
-    "declaration-empty-line-before": "never"
+    "at-rule-no-deprecated": null
   }
 }

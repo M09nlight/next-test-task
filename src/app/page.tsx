@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 export default function Home() {
   const [counter, setCounter] = useState(0);
 
   useEffect(() => {
-    console.log('counter changed', counter);
+    console.log("counter changed", counter);
   }, [counter]);
 
   return (
