@@ -1,36 +1,79 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Создание проекта:
 
-## Getting Started
+1. Создать проект, ипользуя NEXT.js (+ подключить и настроить TypeScript, Eslint, Prettier, StyleLint, Husky, EditorConfig)
+2. Подключить UI-библиотеку shad/cn + TailWind
+3. Подключить react-hook-form + zod
+4. Создать структуру проекта, используя FSD (выполнения дальнейших заданий должно происходить СТРОГО СОГЛАСНО FSD)
 
-First, run the development server:
+## Задание:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+1. Реализовать ПЕРЕИСПОЛЬЗУЕМОЕ модальное окно, используя библиотеку shad/cn и паттерны Render Props + Compound Components.
+
+##### ВАЖНО:
+
+Вся логика по открытию/закрытию модального окна должна быть ПОЛНОСТЬЮ инкапсулирована в данном компоненте (компонент, может принимать в себя кнопку открытия модального окна): вызов модального окна в компонентах не должен сопровождаться импортированием (хуки/функции/контексты и пр) и дальнейшим их использованием в этих компонентах.
+
+2. Реализовать форму создания пользователя, используя библиотеки react-hook-form, zod и shad/cn.
+
+##### ВАЖНО:
+
+1.1 Необходимо учитывать риск перехода между библиотеками для обработки форм (например, в дальнейшем будет поставлена задача переписать все формы с react-hook-form на formik)
+1.2 Необходимо учитывать возможность, что форма станет мультистеповой (соответственно, степы должно быть изолированы друг от друга)
+1.3 Необходимо придерживаться MVC
+1.4 Необходимо учитывать, что данная форма может использвоаться как самостоятельная единица на страницу, так и в различных компонентах, обладающих логикой открытия и закрытия (например, модальное окно)
+
+3. Создать модально окно, в котором будет отображаться форма создания пользователя
+
+# Ниже приведен пример создания и вызова модального окна в компоненте:
+
+- Переиспользуемое модальное окно
+
+```
+type ModalWindowProps = {
+    ...
+    // при необходимости, опишите
+}
+
+export const ModalWindow = ({...}: ModalWindowProps) => {
+    // ВАЖНО: вся логика по открытию мадольного окна ДОЛЖНА БЫТЬ ИНКАПСУЛИРОВАНА В ДАННОМ КОМПОНЕНТЕ
+
+    return (
+      <ModalWindow title='Create user'>
+        // контентая составляющая модального окна
+      </ModalWindow>
+    )
+}
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Модальное окно с формой создания пользователя
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+type CreateUserModalWindowProps = {
+    ...
+    // при необходимости, опишите
+}
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+export const CreateUserModalWindow = ({...}: CreateUserModalWindowProps) => {
+    // ВАЖНО: в данном компоненте НЕ должно быть логики по открытию мадольного окна
 
-## Learn More
+    return (
+      <ModalWindow title='Create user'>
+        // контентая составляющая модального окна
+      </ModalWindow>
+    )
+}
+```
 
-To learn more about Next.js, take a look at the following resources:
+- Компонент, использующий модальное окно с формой создания пользователя
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+export const MyComponent = () => {
+    // ВАЖНО: в данном компоненте НЕ должно быть логики по открытию мадольного окна
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+    return (
+      <CreateUserModalWindow />
+    )
+}
+```
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+#### !!! ПРИ ОЦЕНКЕ ВЫПОЛНЕННОГО ТЕСТОВОГО ЗАДАНИЯ, БУДУТ УЧИТЫВАТЬСЯ УМЕНИЯ ИСПОЛЬЗОВАТЬ ПАТТЕРНЫ И ЧИСТОТА КОДА
